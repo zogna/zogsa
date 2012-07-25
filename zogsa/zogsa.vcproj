@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="zogsa"
-	ProjectGUID="{C892E509-0C4A-4F30-8096-EC7DE9A41AE3}"
+	ProjectGUID="{9EE7E5E2-8DDE-406F-96E3-83185E3483A8}"
 	RootNamespace="zogsa"
 	Keyword="Win32Proj"
 	>
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -60,9 +60,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="OPENGL32.LIB freetype245MT_D.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
-				SubSystem="1"
+				SubSystem="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -115,7 +116,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -135,7 +136,7 @@
 				Name="VCLinkerTool"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
-				SubSystem="1"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"
@@ -178,6 +179,18 @@
 				RelativePath=".\fileread.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\main_win.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\zogftes.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\zogsa_gl.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -186,6 +199,18 @@
 			>
 			<File
 				RelativePath=".\fileread.h"
+				>
+			</File>
+			<File
+				RelativePath=".\main_win.h"
+				>
+			</File>
+			<File
+				RelativePath=".\zogftes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\zogsa_gl.h"
 				>
 			</File>
 		</Filter>
