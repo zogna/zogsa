@@ -1,6 +1,7 @@
 #include "zogftes.h"
 #include "zogsa_gl.h"
-extern HWND		hWnd ;
+#include "fileread.h"
+#include "min5a.h"
 
 #define ClearColor	0.6627f,0.89019f,0.643137f,1.0f
 
@@ -33,6 +34,52 @@ void clear(void)
 	zogftes_clean();
 }
 
+unsigned int IDp;
+
+void GLkey(WPARAM	wParam)
+{
+	switch (wParam)							// Check System Calls
+	{
+
+	case VK_SPACE:
+		break;
+	case VK_RETURN:
+
+		break;
+	case VK_UP:
+		break;
+
+	case VK_DOWN:
+		break;
+	case VK_LEFT:
+		break;
+
+	case VK_RIGHT:
+		break;
+	case 'A':
+	case 'a':
+		break;
+	case 'S':
+	case 's':
+		break;
+		//pagedown
+	case	VK_PRIOR:
+		if(IDp)
+			IDp--;
+		break;
+
+		//pagedown
+	case	VK_NEXT:
+		if(IDp<5841)
+			IDp++;
+		break;
+
+	default:
+		break;
+	}
+
+}
+
 void ReSizeGLScene(GLsizei width, GLsizei height)		// Resize And Initialize The GL Window
 {
 	if (height==0)										// Prevent A Divide By Zero By
@@ -63,7 +110,10 @@ void InitGL(void)										// All Setup For OpenGL Goes Here
 	//glGenTextures(10, textureID);
 	// glPixelStorei(GL_UNPACK_ALIGNMENT, 1);	
 
+
+	readdata();
 	loadfont();
+	IDp=0;
 }
 
 void DrawGLScene(void)	
@@ -72,11 +122,25 @@ void DrawGLScene(void)
 	glLoadIdentity();		
 
 
-
+	min5display();
 	printftest();
 }
 
 void clearGL(void)
 {
 	clear();
+}
+
+void min5display(void)
+{
+
+	wchar_t str[9];
+
+	mbstowcs(str,Getmin5ID(IDp),9);
+
+	zogftes_print(400,400,str,8,16);
+	min5UpRateOne(IDp);
+
+
+
 }

@@ -51,4 +51,9 @@ struct DAYDATA_X
 //取消节省
 #pragma pack()
 
+
+void readdata(void);
+void dayreadX(const char *path);
+void min5readX(const char *path);
+
 #endif

@@ -184,6 +184,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\min5a.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\zogftes.cpp"
 				>
 			</File>
@@ -203,6 +207,10 @@
 			</File>
 			<File
 				RelativePath=".\main_win.h"
+				>
+			</File>
+			<File
+				RelativePath=".\min5a.h"
 				>
 			</File>
 			<File

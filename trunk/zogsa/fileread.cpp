@@ -73,11 +73,10 @@ void dayreadX(const char *path)
 		getchar();
 	}	
 }
-/*
+
 //Security Analysis
-int main(void)
+void readdata(void)
 {
 	 min5readX("min5.dat");
 	 dayreadX("day.dat");
 }
-*/
