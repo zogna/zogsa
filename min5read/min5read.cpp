@@ -16,16 +16,16 @@ struct MIN5DATA_S
 	double deal_price;
 };
 
-unsigned int  min5data_total;
+unsigned int  total;
 //最多存2年
-struct MIN5DATA_S min5data[65500]={0};
+struct MIN5DATA_S data[65500]={0};
 
 struct MIN5DATA_X
 {
 	//就8个编号
 	char id[9];
-	unsigned int  min5data_total;
-	struct MIN5DATA_S *min5data;
+	unsigned int  total;
+	struct MIN5DATA_S *data;
 };
 
 unsigned int  min5datax_total=0;
@@ -52,7 +52,7 @@ int main(void)
 
 	for(i=0;i<dir_total;i++)
 	{
-		min5data_total=0;
+		total=0;
 
 		min5read(dir[i]);
 		min5copy(i,dir[i]);
@@ -67,7 +67,7 @@ int main(void)
 void min5read(const char *path)
 {
 	FILE *fp;
-	int i;
+	unsigned int i;
 
 	fp=fopen(path,"rb");
 
@@ -75,21 +75,21 @@ void min5read(const char *path)
 	{
 		while(!feof(fp))
 		{
-			fscanf(fp,"%d",&min5data[min5data_total].date);
-			fscanf(fp,"%d",&min5data[min5data_total].time);
-			fscanf(fp,"%f",&min5data[min5data_total].open_price);
-			fscanf(fp,"%f",&min5data[min5data_total].top_price);
-			fscanf(fp,"%f",&min5data[min5data_total].low_price);
-			fscanf(fp,"%f",&min5data[min5data_total].close_price);
-			fscanf(fp,"%d",&min5data[min5data_total].deal_num);
-			fscanf(fp,"%lf",&min5data[min5data_total].deal_price);
-			min5data_total++;
+			fscanf(fp,"%d",&data[total].date);
+			fscanf(fp,"%d",&data[total].time);
+			fscanf(fp,"%f",&data[total].open_price);
+			fscanf(fp,"%f",&data[total].top_price);
+			fscanf(fp,"%f",&data[total].low_price);
+			fscanf(fp,"%f",&data[total].close_price);
+			fscanf(fp,"%d",&data[total].deal_num);
+			fscanf(fp,"%lf",&data[total].deal_price);
+			total++;
 		}
 		//会多一个
-		min5data_total--;
+		total--;
 
-		for(i=0;i<min5data_total;i++)
-			min5data[i].now_price=min5data[i].deal_price/min5data[i].deal_num;
+		for(i=0;i<total;i++)
+			data[i].now_price=data[i].deal_price/data[i].deal_num;
 
 		fclose(fp);
 	}
@@ -108,8 +108,8 @@ void min5write(const char *path)
 
 	if(fp) 
 	{
-		fwrite(&min5data_total,sizeof(unsigned int),1,fp);
-		fwrite(min5data,sizeof(struct MIN5DATA_S),min5data_total,fp);
+		fwrite(&total,sizeof(unsigned int),1,fp);
+		fwrite(data,sizeof(struct MIN5DATA_S),total,fp);
 
 		fclose(fp);
 	}
@@ -133,16 +133,16 @@ void min5copy(int i,const char *path)
 	min5datax[i].id[6]=path[k-6];
 	min5datax[i].id[7]=path[k-5];
 
-	min5datax[i].min5data=(struct MIN5DATA_S *)calloc(min5data_total,sizeof(struct MIN5DATA_S));
+	min5datax[i].data=(struct MIN5DATA_S *)calloc(total,sizeof(struct MIN5DATA_S));
 
-	memcpy(&min5datax[i].min5data_total,&min5data_total,sizeof(unsigned int));
-	memcpy(min5datax[i].min5data,min5data,sizeof(struct MIN5DATA_S)*min5data_total);
+	memcpy(&min5datax[i].total,&total,sizeof(unsigned int));
+	memcpy(min5datax[i].data,data,sizeof(struct MIN5DATA_S)*total);
 }
 
 void min5writeX(const char *path)
 {
 	FILE *fp;
-	int i;
+	unsigned int i;
 
 	fp=fopen(path,"wb");
 
@@ -152,8 +152,9 @@ void min5writeX(const char *path)
 
 		for(i=0;i<min5datax_total;i++)
 		{
-			fwrite(&min5datax[i].min5data_total,sizeof(unsigned int),1,fp);
-			fwrite(min5datax[i].min5data,sizeof(struct MIN5DATA_S),min5datax[i].min5data_total,fp);
+			fwrite(min5datax[i].id,sizeof(char),9,fp);
+			fwrite(&min5datax[i].total,sizeof(unsigned int),1,fp);
+			fwrite(min5datax[i].data,sizeof(struct MIN5DATA_S),min5datax[i].total,fp);
 		}
 
 		fclose(fp);

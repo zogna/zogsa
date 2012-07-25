@@ -15,16 +15,16 @@ struct DAYDATA_S
 	double deal_price;
 };
 
-unsigned int  daydata_total;
+unsigned int  total;
 //最多存2年
-struct DAYDATA_S daydata[65500]={0};
+struct DAYDATA_S data[65500]={0};
 
 struct DAYDATA_X
 {
 	//就8个编号
 	char id[9];
-	unsigned int  daydata_total;
-	struct DAYDATA_S *daydata;
+	unsigned int  total;
+	struct DAYDATA_S *data;
 };
 
 unsigned int  daydatax_total=0;
@@ -51,7 +51,7 @@ int main(void)
 
 	for(i=0;i<dir_total;i++)
 	{
-		daydata_total=0;
+		total=0;
 
 		dayread(dir[i]);
 		daycopy(i,dir[i]);
@@ -66,7 +66,7 @@ int main(void)
 void dayread(const char *path)
 {
 	FILE *fp;
-	int i;
+	unsigned int i;
 
 	fp=fopen(path,"rb");
 
@@ -74,20 +74,20 @@ void dayread(const char *path)
 	{
 		while(!feof(fp))
 		{
-			fscanf(fp,"%d",&daydata[daydata_total].date);
-			fscanf(fp,"%f",&daydata[daydata_total].open_price);
-			fscanf(fp,"%f",&daydata[daydata_total].top_price);
-			fscanf(fp,"%f",&daydata[daydata_total].low_price);
-			fscanf(fp,"%f",&daydata[daydata_total].close_price);
-			fscanf(fp,"%d",&daydata[daydata_total].deal_num);
-			fscanf(fp,"%lf",&daydata[daydata_total].deal_price);
-			daydata_total++;
+			fscanf(fp,"%d",&data[total].date);
+			fscanf(fp,"%f",&data[total].open_price);
+			fscanf(fp,"%f",&data[total].top_price);
+			fscanf(fp,"%f",&data[total].low_price);
+			fscanf(fp,"%f",&data[total].close_price);
+			fscanf(fp,"%d",&data[total].deal_num);
+			fscanf(fp,"%lf",&data[total].deal_price);
+			total++;
 		}
 		//会多一个
-		daydata_total--;
+		total--;
 
-		for(i=0;i<daydata_total;i++)
-			daydata[i].aver_price=daydata[i].deal_price/daydata[i].deal_num;
+		for(i=0;i<total;i++)
+			data[i].aver_price=data[i].deal_price/data[i].deal_num;
 
 		fclose(fp);
 	}
@@ -106,8 +106,8 @@ void daywrite(const char *path)
 
 	if(fp) 
 	{
-		fwrite(&daydata_total,sizeof(unsigned int),1,fp);
-		fwrite(daydata,sizeof(struct DAYDATA_S),daydata_total,fp);
+		fwrite(&total,sizeof(unsigned int),1,fp);
+		fwrite(data,sizeof(struct DAYDATA_S),total,fp);
 
 		fclose(fp);
 	}
@@ -120,7 +120,7 @@ void daywrite(const char *path)
 
 void daycopy(int i,const char *path)
 {
-	int k=strlen(path);
+	size_t k=strlen(path);
 
 	daydatax[i].id[0]=path[k-12];
 	daydatax[i].id[1]=path[k-11];
@@ -131,16 +131,16 @@ void daycopy(int i,const char *path)
 	daydatax[i].id[6]=path[k-6];
 	daydatax[i].id[7]=path[k-5];
 
-	daydatax[i].daydata=(struct DAYDATA_S *)calloc(daydata_total,sizeof(struct DAYDATA_S));
+	daydatax[i].data=(struct DAYDATA_S *)calloc(total,sizeof(struct DAYDATA_S));
 
-	memcpy(&daydatax[i].daydata_total,&daydata_total,sizeof(unsigned int));
-	memcpy(daydatax[i].daydata,daydata,sizeof(struct DAYDATA_S)*daydata_total);
+	memcpy(&daydatax[i].total,&total,sizeof(unsigned int));
+	memcpy(daydatax[i].data,data,sizeof(struct DAYDATA_S)*total);
 }
 
 void daywriteX(const char *path)
 {
 	FILE *fp;
-	int i;
+	unsigned int i;
 
 	fp=fopen(path,"wb");
 
@@ -150,8 +150,9 @@ void daywriteX(const char *path)
 
 		for(i=0;i<daydatax_total;i++)
 		{
-			fwrite(&daydatax[i].daydata_total,sizeof(unsigned int),1,fp);
-			fwrite(daydatax[i].daydata,sizeof(struct DAYDATA_S),daydatax[i].daydata_total,fp);
+			fwrite(daydatax[i].id,sizeof(char),9,fp);
+			fwrite(&daydatax[i].total,sizeof(unsigned int),1,fp);
+			fwrite(daydatax[i].data,sizeof(struct DAYDATA_S),daydatax[i].total,fp);
 		}
 
 		fclose(fp);
