@@ -3,6 +3,8 @@
 #include "stdio.h"
 #include "stdlib.h"
 
+#pragma pack(1)
+
 struct MIN5DATA_S
 {
 	unsigned long int date;
@@ -16,10 +18,6 @@ struct MIN5DATA_S
 	double deal_price;
 };
 
-unsigned int  total;
-//最多存2年
-struct MIN5DATA_S data[65500]={0};
-
 struct MIN5DATA_X
 {
 	//就8个编号
@@ -27,6 +25,13 @@ struct MIN5DATA_X
 	unsigned int  total;
 	struct MIN5DATA_S *data;
 };
+
+//取消节省
+#pragma pack()
+
+unsigned int  total;
+//最多存2年
+struct MIN5DATA_S data[65500]={0};
 
 unsigned int  min5datax_total=0;
 struct MIN5DATA_X min5datax[8000];
