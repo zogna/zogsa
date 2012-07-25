@@ -1,29 +1,9 @@
 #include "windows.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "fileread.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-struct MIN5DATA_S
-{
-	unsigned long int date;
-	unsigned int time;
-	float open_price;
-	float top_price;
-	float low_price;
-	float close_price;
-	float now_price;
-	unsigned long int deal_num;
-	double deal_price;
-};
-
-struct MIN5DATA_X
-{
-	//就8个编号
-	char id[9];
-	unsigned int  total;
-	struct MIN5DATA_S *data;
-};
-
 unsigned int  min5datax_total;
 struct MIN5DATA_X *min5datax;
 ////////////////////////////////////////////////////
@@ -59,25 +39,6 @@ void min5readX(const char *path)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-struct DAYDATA_S
-{
-	unsigned long int date;
-	float open_price;
-	float top_price;
-	float low_price;
-	float close_price;
-	float aver_price;
-	unsigned long int deal_num;
-	double deal_price;
-};
-
-struct DAYDATA_X
-{
-	//就8个编号
-	char id[9];
-	unsigned int  total;
-	struct DAYDATA_S *data;
-};
 
 unsigned int  daydatax_total;
 struct DAYDATA_X *daydatax;

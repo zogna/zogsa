@@ -3,6 +3,8 @@
 #include "stdio.h"
 #include "stdlib.h"
 
+#pragma pack(1)
+
 struct DAYDATA_S
 {
 	unsigned long int date;
@@ -15,10 +17,6 @@ struct DAYDATA_S
 	double deal_price;
 };
 
-unsigned int  total;
-//最多存2年
-struct DAYDATA_S data[65500]={0};
-
 struct DAYDATA_X
 {
 	//就8个编号
@@ -26,6 +24,14 @@ struct DAYDATA_X
 	unsigned int  total;
 	struct DAYDATA_S *data;
 };
+
+//取消节省
+#pragma pack()
+
+unsigned int  total;
+//最多存2年
+struct DAYDATA_S data[65500]={0};
+
 
 unsigned int  daydatax_total=0;
 struct DAYDATA_X daydatax[8000];
