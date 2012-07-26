@@ -17,6 +17,12 @@ void DrawGLScene(void);
 void clearGL(void);
 
 void min5display(void);
+void min5UpRateOneDisplay(int x,int y);
+void min10UpRateOneDisplay(int x,int y);
+void min30UpRateOneDisplay(int x,int y);
+void min60UpRateOneDisplay(int x,int y);
+void min120UpRateOneDisplay(int x,int y);
+
 
 
 #endif

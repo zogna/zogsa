@@ -94,6 +94,156 @@ void min5UpRateOne(unsigned int i)
 	}
 }
 
+//0935->1500 共48个数据点
+int min10UpRate[24];
+
+//一只股票的每天的涨跌率
+void min10UpRateOne(unsigned int i)
+{
+	unsigned int j,k;
+
+	for(j=0;j<24;j++)
+		min10UpRate[j]=0;
+
+	for(j=0;j<min5datax[i].total;j++)
+	{
+		for(k=0;k<48;k++)
+		{
+			if(min5datax[i].data[j].time==timelist[k])
+				break;
+		}
+		if(48==k)
+			k=48;
+		//	偶数 跳过
+		if(1!=k%2)
+			continue;
+
+		k=(k/2);
+		if(0==k || 0==j)
+			min10UpRate[k]+=UPorDOWN(min5datax[i].data[j].open_price,min5datax[i].data[j].now_price);
+		else
+		{
+			if(min5datax[i].data[j-2].date==min5datax[i].data[j].date)
+				min10UpRate[k]+=UPorDOWN(min5datax[i].data[j-2].open_price,min5datax[i].data[j].now_price);
+			else
+				min10UpRate[k]+=UPorDOWN(min5datax[i].data[j].open_price,min5datax[i].data[j].now_price);
+		}
+	}
+}
+//0935->1500 共48个数据点
+int min30UpRate[8];
+
+//一只股票的每天的涨跌率
+void min30UpRateOne(unsigned int i)
+{
+	unsigned int j,k;
+
+	for(j=0;j<8;j++)
+		min30UpRate[j]=0;
+
+	for(j=0;j<min5datax[i].total;j++)
+	{
+		for(k=0;k<48;k++)
+		{
+			if(min5datax[i].data[j].time==timelist[k])
+				break;
+		}
+		if(48==k)
+			k=48;
+		//	偶数 跳过
+		if(5!=k%6)
+			continue;
+
+		k=(k/6);
+
+		if(0==k || 0==j)
+			min30UpRate[k]+=UPorDOWN(min5datax[i].data[j].open_price,min5datax[i].data[j].now_price);
+		else
+		{
+			if(min5datax[i].data[j-6].date==min5datax[i].data[j].date)
+				min30UpRate[k]+=UPorDOWN(min5datax[i].data[j-6].open_price,min5datax[i].data[j].now_price);
+			else
+				min30UpRate[k]+=UPorDOWN(min5datax[i].data[j].open_price,min5datax[i].data[j].now_price);
+		}
+	}
+}
+
+//0935->1500 共48个数据点
+int min60UpRate[4];
+
+//一只股票的每天的涨跌率
+void min60UpRateOne(unsigned int i)
+{
+	unsigned int j,k;
+
+	for(j=0;j<4;j++)
+		min60UpRate[j]=0;
+
+	for(j=0;j<min5datax[i].total;j++)
+	{
+		for(k=0;k<48;k++)
+		{
+			if(min5datax[i].data[j].time==timelist[k])
+				break;
+		}
+		if(48==k)
+			k=48;
+		//	偶数 跳过
+		if(11!=k%12)
+			continue;
+
+		k=(k/12);
+
+		if(0==k || 0==j)
+			min60UpRate[k]+=UPorDOWN(min5datax[i].data[j].open_price,min5datax[i].data[j].now_price);
+		else
+		{
+			if(min5datax[i].data[j-12].date==min5datax[i].data[j].date)
+				min60UpRate[k]+=UPorDOWN(min5datax[i].data[j-12].open_price,min5datax[i].data[j].now_price);
+			else
+				min60UpRate[k]+=UPorDOWN(min5datax[i].data[j].open_price,min5datax[i].data[j].now_price);
+		}
+	}
+}
+
+//0935->1500 共48个数据点
+int min120UpRate[2];
+
+//一只股票的每天的涨跌率
+void min120UpRateOne(unsigned int i)
+{
+	unsigned int j,k;
+
+	for(j=0;j<2;j++)
+		min120UpRate[j]=0;
+
+	for(j=0;j<min5datax[i].total;j++)
+	{
+		for(k=0;k<48;k++)
+		{
+			if(min5datax[i].data[j].time==timelist[k])
+				break;
+		}
+		if(48==k)
+			k=48;
+		//	偶数 跳过
+		if(23!=k%24)
+			continue;
+
+		k=(k/24);
+
+		if(0==k || 0==j)
+			min120UpRate[k]+=UPorDOWN(min5datax[i].data[j].open_price,min5datax[i].data[j].now_price);
+		else
+		{
+			if(min5datax[i].data[j-24].date==min5datax[i].data[j].date)
+				min120UpRate[k]+=UPorDOWN(min5datax[i].data[j-24].open_price,min5datax[i].data[j].now_price);
+			else
+				min120UpRate[k]+=UPorDOWN(min5datax[i].data[j].open_price,min5datax[i].data[j].now_price);
+		}
+	}
+}
+
 char * Getmin5ID(unsigned int i)
 {
 	return min5datax[i].id;
