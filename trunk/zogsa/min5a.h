@@ -8,5 +8,6 @@
 
 void min5UpRateOne(unsigned int i);
 char * Getmin5ID(unsigned int i);
+wchar_t * Getmin5NAME(unsigned int i);
 
 #endif

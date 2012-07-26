@@ -47,6 +47,11 @@ struct DAYDATA_X
 	struct DAYDATA_S *data;
 };
 
+struct NAMEDATA_S
+{
+	unsigned long int num;
+	wchar_t name[10];
+};
 
 //取消节省
 #pragma pack()
@@ -55,5 +60,6 @@ struct DAYDATA_X
 void readdata(void);
 void dayreadX(const char *path);
 void min5readX(const char *path);
+void nameread(const char *path);
 
 #endif

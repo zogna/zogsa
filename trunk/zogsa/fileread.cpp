@@ -74,9 +74,37 @@ void dayreadX(const char *path)
 	}	
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+unsigned int  name_total;
+struct NAMEDATA_S *namedata;
+
+////////////////////////////////////////////////////
+void nameread(const char *path)
+{
+	FILE *fp;
+
+	fp=fopen(path,"rb");
+
+	if(fp) 
+	{
+		fread(&name_total,sizeof(unsigned int),1,fp);
+
+		namedata=(struct NAMEDATA_S *)calloc(name_total,sizeof(struct NAMEDATA_S));
+		fread(namedata,sizeof(struct NAMEDATA_S),name_total,fp);
+
+		fclose(fp);
+	}
+	else
+	{
+		fprintf(stderr,"%s con't read\n",path );
+		getchar();
+	}	
+}
+
 //Security Analysis
 void readdata(void)
 {
 	 min5readX("min5.dat");
 	 dayreadX("day.dat");
+	 nameread("name.dat");
 }

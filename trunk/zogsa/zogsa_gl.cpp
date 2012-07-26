@@ -131,16 +131,37 @@ void clearGL(void)
 	clear();
 }
 
+extern int min5UpRate[48];
 void min5display(void)
 {
-
+	int i;
 	wchar_t str[9];
 
 	mbstowcs(str,Getmin5ID(IDp),9);
 
-	zogftes_print(400,400,str,8,16);
+	zogftes_print(10,50,str,8,16);
+	zogftes_print(120,50,Getmin5NAME(IDp),wcslen(Getmin5NAME(IDp)),16);
+	
 	min5UpRateOne(IDp);
 
+	glColor3ub(255,0,0);
 
+	glLineWidth(2);
+
+	glBegin(GL_LINES);
+	glVertex2d(240,500);
+	glVertex2d(0,500);
+	glEnd();
+
+	glLineWidth(4);
+
+	glColor3ub(0,0,255);
+	glBegin(GL_LINES);
+	for(i=0;i<48;i++)
+	{
+		glVertex2d(5+i*5,500-min5UpRate[i]);
+		glVertex2d(5+i*5,500);
+	}
+	glEnd();
 
 }
