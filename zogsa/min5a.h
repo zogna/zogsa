@@ -7,6 +7,11 @@
 
 
 void min5UpRateOne(unsigned int i);
+void min10UpRateOne(unsigned int i);
+void min30UpRateOne(unsigned int i);
+void min60UpRateOne(unsigned int i);
+void min120UpRateOne(unsigned int i);
+
 char * Getmin5ID(unsigned int i);
 wchar_t * Getmin5NAME(unsigned int i);
 

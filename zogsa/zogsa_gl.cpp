@@ -66,12 +66,17 @@ void GLkey(WPARAM	wParam)
 	case	VK_PRIOR:
 		if(IDp)
 			IDp--;
+		else
+			IDp=2414;
+
 		break;
 
 		//pagedown
 	case	VK_NEXT:
-		if(IDp<5841)
+		if(IDp<2414)
 			IDp++;
+		else
+			IDp=0;
 		break;
 
 	default:
@@ -121,9 +126,7 @@ void DrawGLScene(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
 	glLoadIdentity();		
 
-
 	min5display();
-	printftest();
 }
 
 void clearGL(void)
@@ -131,26 +134,40 @@ void clearGL(void)
 	clear();
 }
 
-extern int min5UpRate[48];
 void min5display(void)
 {
-	int i;
 	wchar_t str[9];
 
 	mbstowcs(str,Getmin5ID(IDp),9);
 
-	zogftes_print(10,50,str,8,16);
-	zogftes_print(120,50,Getmin5NAME(IDp),wcslen(Getmin5NAME(IDp)),16);
+	glColor3ub(0,0,0);
+	zogftes_print(10,20,str,8,10);
+	zogftes_print(100,20,Getmin5NAME(IDp),wcslen(Getmin5NAME(IDp)),10);
+
+	min5UpRateOneDisplay(0,100);
+	min10UpRateOneDisplay(0,200);
 	
+	min30UpRateOneDisplay(0,300);
+	min60UpRateOneDisplay(0,400);
+min120UpRateOneDisplay(0,500);
+}
+
+
+extern int min5UpRate[48];
+void min5UpRateOneDisplay(int x,int y)
+{
+	int i;
+
 	min5UpRateOne(IDp);
 
 	glColor3ub(255,0,0);
+	zogftes_print(x,y-50,L"5分钟涨跌率",6,10);
 
 	glLineWidth(2);
 
 	glBegin(GL_LINES);
-	glVertex2d(240,500);
-	glVertex2d(0,500);
+	glVertex2d(x+240,y);
+	glVertex2d(x,y);
 	glEnd();
 
 	glLineWidth(4);
@@ -159,8 +176,130 @@ void min5display(void)
 	glBegin(GL_LINES);
 	for(i=0;i<48;i++)
 	{
-		glVertex2d(5+i*5,500-min5UpRate[i]);
-		glVertex2d(5+i*5,500);
+		glVertex2d(x+3+i*5,y-min5UpRate[i]);
+		glVertex2d(x+3+i*5,y);
+	}
+	glEnd();
+
+}
+
+extern int min10UpRate[24];
+void min10UpRateOneDisplay(int x,int y)
+{
+	int i;
+
+	min10UpRateOne(IDp);
+
+	glColor3ub(255,0,0);
+	zogftes_print(x,y-50,L"10分钟涨跌率",7,10);
+
+	glLineWidth(2);
+
+	glBegin(GL_LINES);
+	glVertex2d(x+240,y);
+	glVertex2d(x,y);
+	glEnd();
+
+	glLineWidth(9);
+
+	glColor3ub(0,0,255);
+	glBegin(GL_LINES);
+	for(i=0;i<24;i++)
+	{
+		glVertex2d(x+5+i*10,y-min10UpRate[i]);
+		glVertex2d(x+5+i*10,y);
+	}
+	glEnd();
+
+}
+
+extern int min30UpRate[8];
+void min30UpRateOneDisplay(int x,int y)
+{
+	int i;
+
+	min30UpRateOne(IDp);
+
+	glColor3ub(255,0,0);
+	zogftes_print(x,y-50,L"30分钟涨跌率",7,10);
+
+	glLineWidth(2);
+
+	glBegin(GL_LINES);
+	glVertex2d(x+240,y);
+	glVertex2d(x,y);
+	glEnd();
+
+	glColor3ub(0,0,255);
+	
+	glBegin(GL_QUADS);
+	for(i=0;i<8;i++)
+	{
+		glVertex2d(x+i*30,y-min30UpRate[i]);
+		glVertex2d(x+i*30,y);
+		glVertex2d(x+(i+1)*30-1,y);
+		glVertex2d(x+(i+1)*30-1,y-min30UpRate[i]);
+	}
+	glEnd();
+
+}
+
+extern int min60UpRate[4];
+void min60UpRateOneDisplay(int x,int y)
+{
+	int i;
+
+	min60UpRateOne(IDp);
+
+	glColor3ub(255,0,0);
+	zogftes_print(x,y-50,L"60分钟涨跌率",7,10);
+
+	glLineWidth(2);
+
+	glBegin(GL_LINES);
+	glVertex2d(x+240,y);
+	glVertex2d(x,y);
+	glEnd();
+
+	glColor3ub(0,0,255);
+	glBegin(GL_QUADS);
+	for(i=0;i<4;i++)
+	{
+		glVertex2d(x+i*60,y-min60UpRate[i]);
+		glVertex2d(x+i*60,y);
+		glVertex2d(x+(i+1)*60-1,y);
+		glVertex2d(x+(i+1)*60-1,y-min60UpRate[i]);
+	}
+	glEnd();
+
+}
+
+extern int min120UpRate[2];
+void min120UpRateOneDisplay(int x,int y)
+{
+	int i;
+
+	min120UpRateOne(IDp);
+
+	glColor3ub(255,0,0);
+	zogftes_print(x,y-50,L"2小时涨跌率",6,10);
+
+	glLineWidth(2);
+
+	glBegin(GL_LINES);
+	glVertex2d(x+240,y);
+	glVertex2d(x,y);
+	glEnd();
+
+	glColor3ub(0,0,255);
+	
+	glBegin(GL_QUADS);
+	for(i=0;i<2;i++)
+	{
+		glVertex2d(x+i*120,y-min120UpRate[i]);
+		glVertex2d(x+i*120,y);
+		glVertex2d(x+(i+1)*120-1,y);
+		glVertex2d(x+(i+1)*120-1,y-min120UpRate[i]);
 	}
 	glEnd();
 
