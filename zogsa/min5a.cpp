@@ -80,6 +80,8 @@ void min5UpRateOne(unsigned int i)
 			if(min5datax[i].data[j].time==timelist[k])
 				break;
 		}
+		if(48==k)
+			k=48;
 		if(0==k || 0==j)
 			min5UpRate[k]+=UPorDOWN(min5datax[i].data[j].open_price,min5datax[i].data[j].now_price);
 		else
@@ -95,4 +97,21 @@ void min5UpRateOne(unsigned int i)
 char * Getmin5ID(unsigned int i)
 {
 	return min5datax[i].id;
+}
+
+///////////////////////////////////////////////////
+extern unsigned int  name_total;
+extern struct NAMEDATA_S *namedata;
+wchar_t * Getmin5NAME(unsigned int i)
+{
+	unsigned int j;
+	unsigned long int n=atol(&min5datax[i].id[2]);
+
+	for(j=0;j<name_total;j++)
+	{
+		if(namedata[j].num==n)
+			return namedata[j].name;
+	}
+
+	return L"";
 }
